@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp // Import para manejar el tamaño del texto
+import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.ui.Alignment
@@ -31,7 +31,7 @@ fun UserApp(userRepository: UserRepository) {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
-    // Función para cargar usuarios
+
     fun cargarUsuarios() {
         scope.launch {
             users = withContext(Dispatchers.IO) {
@@ -40,7 +40,7 @@ fun UserApp(userRepository: UserRepository) {
         }
     }
 
-    // Función para validar los campos de entrada
+
     fun validarCampos(): Boolean {
         if (nombre.isBlank()) {
             Toast.makeText(context, "El campo 'Nombre' no puede estar vacío", Toast.LENGTH_SHORT).show()
@@ -57,7 +57,7 @@ fun UserApp(userRepository: UserRepository) {
         return true
     }
 
-    // Cargar usuarios al inicio
+
     cargarUsuarios()
 
     Box(
@@ -69,17 +69,17 @@ fun UserApp(userRepository: UserRepository) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Agregar un espacio al inicio del formulario
+
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Título de "Registro de Usuario"
+
             Text(
                 text = "Registro de Usuario",
-                fontSize = 24.sp, // Tamaño de fuente ajustable
+                fontSize = 24.sp,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-            // Formulario de Registro
+
             TextField(
                 value = nombre,
                 onValueChange = { nombre = it },
@@ -117,7 +117,7 @@ fun UserApp(userRepository: UserRepository) {
                             userRepository.insert(user)
                         }
                         Toast.makeText(context, "Usuario registrado", Toast.LENGTH_SHORT).show()
-                        cargarUsuarios() // Actualizar lista después de registrar
+                        cargarUsuarios()
                     }
                 }
             }) {
@@ -126,7 +126,7 @@ fun UserApp(userRepository: UserRepository) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Campo de texto para ingresar el ID del usuario a eliminar
+
             TextField(
                 value = deleteUserId,
                 onValueChange = { deleteUserId = it },
@@ -136,7 +136,7 @@ fun UserApp(userRepository: UserRepository) {
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // Botón para eliminar usuario por ID
+
             Button(onClick = {
                 val userId = deleteUserId.toIntOrNull()
                 if (userId != null) {
@@ -146,7 +146,7 @@ fun UserApp(userRepository: UserRepository) {
                         }
                         if (rowsDeleted > 0) {
                             Toast.makeText(context, "Usuario eliminado", Toast.LENGTH_SHORT).show()
-                            cargarUsuarios() // Actualizar lista después de eliminar
+                            cargarUsuarios()
                         } else {
                             Toast.makeText(context, "Error al eliminar usuario", Toast.LENGTH_SHORT).show()
                         }
@@ -160,7 +160,7 @@ fun UserApp(userRepository: UserRepository) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Lista de usuarios registrados
+
             LazyColumn {
                 items(users) { user ->
                     Column(modifier = Modifier.padding(8.dp)) {
@@ -201,7 +201,6 @@ fun UserApp(userRepository: UserRepository) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Botón para confirmar la modificación
             if (selectedUserId != null) {
                 Button(onClick = {
                     if (validarCampos()) {
@@ -217,7 +216,7 @@ fun UserApp(userRepository: UserRepository) {
                             }
                             if (rowsUpdated > 0) {
                                 Toast.makeText(context, "Usuario modificado", Toast.LENGTH_SHORT).show()
-                                cargarUsuarios() // Actualizar la lista de usuarios después de modificar uno
+                                cargarUsuarios()
                             } else {
                                 Toast.makeText(context, "Error al modificar usuario", Toast.LENGTH_SHORT).show()
                             }
